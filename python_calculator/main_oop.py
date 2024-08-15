@@ -9,29 +9,26 @@ class Calculator:
 
         self.equation = StringVar()
         self.entry_value = ''
-        Entry(master, width=17, bg='#fff', font=('Arial Bold', 28), textvariable=self.equation).place(x=0, y=0)
+        # Entry widget for display
+        Entry(master, width=17, bg='#fff', font=('Arial Bold', 28), textvariable=self.equation).grid(row=0, column=0, columnspan=4, pady=10)
 
-        # Define Buttons
-        Button(master, width=11, height=4, text='(', relief='flat', bg='white', command=lambda: self.show('(')).place(x=0, y=50)
-        Button(master, width=11, height=4, text=')', relief='flat', bg='white', command=lambda: self.show(')')).place(x=90, y=50)
-        Button(master, width=11, height=4, text='%', relief='flat', bg='white', command=lambda: self.show('%')).place(x=180, y=50)
-        Button(master, width=11, height=4, text='1', relief='flat', bg='white', command=lambda: self.show('1')).place(x=0, y=125)
-        Button(master, width=11, height=4, text='2', relief='flat', bg='white', command=lambda: self.show('2')).place(x=90, y=125)
-        Button(master, width=11, height=4, text='3', relief='flat', bg='white', command=lambda: self.show('3')).place(x=180, y=125)
-        Button(master, width=11, height=4, text='4', relief='flat', bg='white', command=lambda: self.show('4')).place(x=0, y=200)
-        Button(master, width=11, height=4, text='5', relief='flat', bg='white', command=lambda: self.show('5')).place(x=90, y=200)
-        Button(master, width=11, height=4, text='6', relief='flat', bg='white', command=lambda: self.show('6')).place(x=180, y=200)
-        Button(master, width=11, height=4, text='7', relief='flat', bg='white', command=lambda: self.show('7')).place(x=0, y=275)
-        Button(master, width=11, height=4, text='8', relief='flat', bg='white', command=lambda: self.show('8')).place(x=180, y=275)
-        Button(master, width=11, height=4, text='9', relief='flat', bg='white', command=lambda: self.show('9')).place(x=90, y=275)
-        Button(master, width=11, height=4, text='0', relief='flat', bg='white', command=lambda: self.show('0')).place(x=90, y=350)
-        Button(master, width=11, height=4, text='.', relief='flat', bg='white', command=lambda: self.show('.')).place(x=180, y=350)
-        Button(master, width=11, height=4, text='+', relief='flat', bg='white', command=lambda: self.show('+')).place(x=270, y=275)
-        Button(master, width=11, height=4, text='-', relief='flat', bg='white', command=lambda: self.show('-')).place(x=270, y=200)
-        Button(master, width=11, height=4, text='/', relief='flat', bg='white', command=lambda: self.show('/')).place(x=270, y=50)
-        Button(master, width=11, height=4, text='x', relief='flat', bg='white', command=lambda: self.show('x')).place(x=270, y=125)
-        Button(master, width=11, height=4, text='=', relief='flat', bg='white', command=self.solve).place(x=270, y=350)
-        Button(master, width=11, height=4, text='C', relief='flat', bg='white', command=self.clear).place(x=0, y=350)
+        # Button definitions
+        buttons = [
+            ('(', 1, 0), (')', 1, 1), ('%', 1, 2), ('/', 1, 3),
+            ('7', 2, 0), ('8', 2, 1), ('9', 2, 2), ('*', 2, 3),
+            ('4', 3, 0), ('5', 3, 1), ('6', 3, 2), ('-', 3, 3),
+            ('1', 4, 0), ('2', 4, 1), ('3', 4, 2), ('+', 4, 3),
+            ('0', 5, 0), ('.', 5, 1), ('=', 5, 2), ('C', 5, 3)
+        ]
+
+        # Create and place buttons
+        for (text, row, col) in buttons:
+            if text == '=':
+                Button(master, text=text, width=5, height=2, command=self.solve).grid(row=row, column=col, padx=5, pady=5)
+            elif text == 'C':
+                Button(master, text=text, width=5, height=2, command=self.clear).grid(row=row, column=col, padx=5, pady=5)
+            else:
+                Button(master, text=text, width=5, height=2, command=lambda t=text: self.show(t)).grid(row=row, column=col, padx=5, pady=5)
 
     def show(self, value):
         self.entry_value += str(value)
@@ -43,7 +40,9 @@ class Calculator:
 
     def solve(self):
         try:
-            result = eval(self.entry_value)
+            # Replace 'x' with '*' for proper evaluation
+            expression = self.entry_value.replace('x', '*')
+            result = eval(expression)
             self.equation.set(result)
         except Exception as e:
             self.equation.set("Error")
@@ -52,6 +51,3 @@ class Calculator:
 root = Tk()
 calculator = Calculator(root)
 root.mainloop()
-
-
-
