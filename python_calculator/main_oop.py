@@ -48,6 +48,6 @@ class Calculator:
             self.equation.set("Error")
             print(f"Error: {e}")
 
-root = Tk()
-calculator = Calculator(root)
-root.mainloop()
+EBINZ = Tk()
+calculator = Calculator(EBINZ)
+EBINZ.mainloop()
