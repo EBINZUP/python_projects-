@@ -24,11 +24,11 @@ class Calculator:
         # Create and place buttons
         for (text, row, col) in buttons:
             if text == '=':
-                Button(master, text=text, width=5, height=2, command=self.solve).grid(row=row, column=col, padx=5, pady=5)
+                Button(master, text=text, width=5, height=2, command=self.solve ,bg='lightgreen', ).grid(row=row, column=col, padx=1, pady=3)
             elif text == 'C':
-                Button(master, text=text, width=5, height=2, command=self.clear).grid(row=row, column=col, padx=5, pady=5)
+                Button(master, text=text, width=5, height=2, command=self.clear, bg='red').grid(row=row, column=col, padx=1, pady=3)
             else:
-                Button(master, text=text, width=5, height=2, command=lambda t=text: self.show(t)).grid(row=row, column=col, padx=5, pady=5)
+                Button(master, text=text, width=5, height=2, command=lambda t=text: self.show(t)).grid(row=row, column=col, padx=1, pady=3)
 
     def show(self, value):
         self.entry_value += str(value)
@@ -51,3 +51,23 @@ class Calculator:
 EBINZ = Tk()
 calculator = Calculator(EBINZ)
 EBINZ.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
